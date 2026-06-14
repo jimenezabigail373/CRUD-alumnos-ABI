@@ -1,0 +1,13 @@
+@model IEnumerable<CrudAlumnos.Models.Ciudad>
+
+@if (Model != null && Model.Any())
+{
+    <div class="d-flex flex-wrap gap-2 mt-2">
+        @foreach (var ciudad in Model)
+        {
+            <span class="badge bg-light text-dark border">
+                <i class="bi bi-geo-alt-fill text-primary me-1"></i>@ciudad.Nombre
+            </span>
+        }
+    </div>
+}

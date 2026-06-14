@@ -1,0 +1,46 @@
+@model CrudAlumnos.Models.Alumno
+
+@{
+    ViewData["Title"] = "Detalle del Alumno";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0"><i class="bi bi-person-lines-fill me-2"></i>Detalle del Alumno</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Código</dt>
+                    <dd class="col-sm-8">@Model.CodAlumno</dd>
+
+                    <dt class="col-sm-4">Nombre</dt>
+                    <dd class="col-sm-8">@Model.Nombre</dd>
+
+                    <dt class="col-sm-4">Apellido</dt>
+                    <dd class="col-sm-8">@Model.Apellido</dd>
+
+                    <dt class="col-sm-4">Edad</dt>
+                    <dd class="col-sm-8">@Model.Edad años</dd>
+
+                    <dt class="col-sm-4">Sexo</dt>
+                    <dd class="col-sm-8">
+                        @(Model.Sexo == "M" ? "Masculino" : "Femenino")
+                    </dd>
+
+                    <dt class="col-sm-4">Ciudad</dt>
+                    <dd class="col-sm-8">@Model.Ciudad?.Nombre</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i>Volver
+                </a>
+                <a asp-action="Edit" asp-route-id="@Model.CodAlumno" class="btn btn-warning">
+                    <i class="bi bi-pencil me-1"></i>Editar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+@model IEnumerable<CrudAlumnos.Models.Alumno>
+
+@{
+    ViewData["Title"] = "Lista de Alumnos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0"><i class="bi bi-people-fill me-2 text-primary"></i>Lista de Alumnos</h2>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-person-plus me-1"></i>Nuevo Alumno
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Edad</th>
+                    <th>Sexo</th>
+                    <th>Ciudad</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var alumno in Model)
+                {
+                    <tr>
+                        <td>@alumno.CodAlumno</td>
+                        <td>@alumno.Nombre</td>
+                        <td>@alumno.Apellido</td>
+                        <td>@alumno.Edad</td>
+                        <td>
+                            @if (alumno.Sexo == "M")
+                            {
+                                <span class="badge bg-info text-dark"><i class="bi bi-gender-male me-1"></i>Masculino</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-pink text-dark" style="background-color:#f8a4c8"><i class="bi bi-gender-female me-1"></i>Femenino</span>
+                            }
+                        </td>
+                        <td>@alumno.Ciudad?.Nombre</td>
+                        <td class="text-center">
+                            <a asp-action="Details" asp-route-id="@alumno.CodAlumno"
+                               class="btn btn-sm btn-outline-secondary me-1" title="Ver detalles">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@alumno.CodAlumno"
+                               class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@alumno.CodAlumno"
+                               class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-4 d-block mb-1"></i>No hay alumnos registrados.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h5 class="text-muted"><i class="bi bi-geo-alt me-1"></i>Ciudades disponibles</h5>
+    @await Component.InvokeAsync("ViewComponent", new { }) 
+    @* Vista parcial *@
+    @await Html.PartialAsync("_ListaCiudades", await (Task<IEnumerable<CrudAlumnos.Models.Ciudad>>)ViewBag.Ciudades ?? Enumerable.Empty<CrudAlumnos.Models.Ciudad>())
+</div>
